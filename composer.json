@@ -1,0 +1,42 @@
+{
+    "name": "onaonbir/oo-readable",
+    "description": "Readable formatting tools for numbers, dates, durations and file sizes in Laravel.",
+    "type": "library",
+    "version": "1.0.0",
+    "license": "MIT",
+    "keywords": ["laravel", "readable", "formatter", "numbers", "dates", "sizes", "human readable"],
+
+    "require": {
+        "php": "^8.3",
+        "illuminate/support": "^10.0|^11.0|^12.0",
+        "ext-intl": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "OnaOnbir\\OOReadable\\": "src/"
+        },
+        "files": [
+            "helpers/blade_helpers.php"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "OnaOnbir\\OOReadable\\OOReadableServiceProvider"
+            ]
+        }
+    },
+    "authors": [
+        {
+            "name": "Berkay Barışkan",
+            "email": "berkaybariskan0208@gmail.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/onaonbir/oo-readable/issues",
+        "source": "https://github.com/onaonbir/oo-readable"
+    },
+
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
