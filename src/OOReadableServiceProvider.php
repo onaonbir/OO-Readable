@@ -34,7 +34,7 @@ class OOReadableServiceProvider extends ServiceProvider
 
     protected function registerBladeDirective(string $prefix, string $method): void
     {
-        Blade::directive($prefix . $method, function ($data) use ($method) {
+        Blade::directive($prefix.$method, function ($data) use ($method) {
             return "<?php echo OnaOnbir\\OOReadable\\Readable::get{$method}($data); ?>";
         });
     }

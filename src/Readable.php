@@ -49,22 +49,23 @@ class Readable
             }
         }
 
-        return !empty($getFloor . $suffix) ? number_format($getFloor, $decimals) . $suffix : '0';
+        return ! empty($getFloor.$suffix) ? number_format($getFloor, $decimals).$suffix : '0';
     }
 
     public static function getNumberToString($input, string $lang = 'tr'): string
     {
-        if (!in_array(gettype($input), ['integer', 'double', 'float'])) {
+        if (! in_array(gettype($input), ['integer', 'double', 'float'])) {
             throw new TypeError('Wrong Input Type.');
         }
 
         $digit = new NumberFormatter($lang, NumberFormatter::SPELLOUT);
+
         return $digit->format($input);
     }
 
     public static function getDecimal($input, int $decimals = 2, string $point = '.', string $delimiter = ','): ?string
     {
-        if (!in_array(gettype($input), ['integer', 'double', 'float'])) {
+        if (! in_array(gettype($input), ['integer', 'double', 'float'])) {
             throw new TypeError('Wrong Input Type.');
         }
 
@@ -73,7 +74,7 @@ class Readable
 
     public static function getDecInt($input, int $decimals_length = 2, string $point = '.', string $delimiter = ','): ?string
     {
-        if (!in_array(gettype($input), ['integer', 'double', 'float'])) {
+        if (! in_array(gettype($input), ['integer', 'double', 'float'])) {
             throw new TypeError('Wrong Input Type.');
         }
 
@@ -92,7 +93,7 @@ class Readable
 
     public static function prepareDateTime(&$input, ?string $tz = null)
     {
-        if (!($input instanceof Carbon) && !($input instanceof IlluminateCarbon)) {
+        if (! ($input instanceof Carbon) && ! ($input instanceof IlluminateCarbon)) {
             $input = Carbon::parse($input);
         }
 
@@ -104,13 +105,15 @@ class Readable
     public static function getDate($input, ?string $timezone = null): ?string
     {
         self::prepareDateTime($input, $timezone);
-        return $input->day . ' ' . $input->monthName . ' ' . $input->year;
+
+        return $input->day.' '.$input->monthName.' '.$input->year;
     }
 
     public static function getDateWoYear($input, ?string $timezone = null): ?string
     {
         self::prepareDateTime($input, $timezone);
-        return $input->day . ' ' . $input->monthName;
+
+        return $input->day.' '.$input->monthName;
     }
 
     public static function getTime($input, $is12 = false, bool $hasSeconds = false, ?string $timezone = null): ?string
@@ -118,10 +121,10 @@ class Readable
         self::prepareDateTime($input, $timezone);
 
         if ($is12) {
-            return $input->format('h:i' . ($hasSeconds ? ':s' : '') . ' ') . $input->meridiem();
+            return $input->format('h:i'.($hasSeconds ? ':s' : '').' ').$input->meridiem();
         }
 
-        return $input->format('H:i' . ($hasSeconds ? ':s' : ''));
+        return $input->format('H:i'.($hasSeconds ? ':s' : ''));
     }
 
     public static function getDateTime($input, $is12 = false, bool $hasSeconds = false, ?string $timezone = null, ?string $customFormat = null): ?string
@@ -132,7 +135,7 @@ class Readable
             return $input->isoFormat($customFormat);
         }
 
-        return $input->isoFormat('dddd, MMMM DD, YYYY ' . ($is12 ? 'hh:mm' . ($hasSeconds ? ':ss' : '') . ' A' : 'HH:mm' . ($hasSeconds ? ':ss' : '')));
+        return $input->isoFormat('dddd, MMMM DD, YYYY '.($is12 ? 'hh:mm'.($hasSeconds ? ':ss' : '').' A' : 'HH:mm'.($hasSeconds ? ':ss' : '')));
     }
 
     public static function getDiffDateTime($old, $new = null, ?string $timezone = null): ?string
@@ -145,14 +148,20 @@ class Readable
 
     public static function getTimeLength(int $input, string $comma = ' ', bool $short = false): ?string
     {
-        $years = floor($input / 31104000); $input -= $years * 31104000;
-        $months = floor($input / 2592000); $input -= $months * 2592000;
-        $days = floor($input / 86400); $input -= $days * 86400;
-        $hours = floor($input / 3600); $input -= $hours * 3600;
-        $minutes = floor($input / 60); $input -= $minutes * 60;
+        $years = floor($input / 31104000);
+        $input -= $years * 31104000;
+        $months = floor($input / 2592000);
+        $input -= $months * 2592000;
+        $days = floor($input / 86400);
+        $input -= $days * 86400;
+        $hours = floor($input / 3600);
+        $input -= $hours * 3600;
+        $minutes = floor($input / 60);
+        $input -= $minutes * 60;
         $seconds = $input % 60;
 
         $interval = new CarbonInterval($years, $months, null, $days, $hours, $minutes, $seconds);
+
         return $interval->forHumans(['join' => $comma, 'short' => $short]);
     }
 
@@ -174,6 +183,6 @@ class Readable
         $base = log($bytes) / log($calcBase);
         $suffixes = $decimal ? ['B', 'KB', 'MB', 'GB', 'TB'] : ['B', 'KiB', 'MiB', 'GiB', 'TiB'];
 
-        return round(pow($calcBase, $base - floor($base)), 2) . ' ' . $suffixes[floor($base)];
+        return round(pow($calcBase, $base - floor($base)), 2).' '.$suffixes[floor($base)];
     }
 }
